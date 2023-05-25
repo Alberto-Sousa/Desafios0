@@ -1,0 +1,58 @@
+menu = """ 
+*-----------------------*
+[1] Depositar
+[2] Sacar
+[3] Extrato
+[0] Sair
+*-----------------------*
+=>"""
+
+saldo = 0
+limite = 500
+numero_saques = 0
+LIMITE_SAQUES = 3
+extratos = ""
+
+while True:
+    opcao = int(input(menu))
+    if opcao == 1:
+        deposito = float(input("Insira o valor do depósito: R$"))
+        if deposito > 0:
+            saldo += deposito
+            print("Valor depositado com sucesso!")
+            extratos += f"Depósito: R${deposito:.2f}\n"
+        else:
+            print("Valor inválido. Operação não realizada.")
+    elif opcao == 2:
+
+        print(f"Seu saldo é de R${saldo:.2f}")
+        saque = int(input("Insira o valor que deseja sacar: R$"))
+        if saldo > 0 and saque <= limite and LIMITE_SAQUES > 0:
+            if saque > 0 and saldo-saque>=0:
+                saldo -= saque
+                print(f"Saque de {saque:.2f} realizado com sucesso.")
+                print(f"Seu novo saldo é de R${saldo:.2f}")
+                LIMITE_SAQUES -= 1
+                numero_saques +=1
+                extratos += f"Saque: R${saque:.2f}\n"
+            else:
+                print("Operação não realizada.")
+        elif saldo <= 0:
+            print("Você não tem saldo suficiente.")
+        elif saque > limite or LIMITE_SAQUES == 0:
+            print("Você excedeu o limite de saque")
+    elif opcao == 3:
+        print("Extrato")
+        print(f"""
+*-----------------EXTRATO-------------------*        
+OPERAÇÃO
+{extratos}    
+Saldo Atual.........R${saldo:.2f}          
+Quantidade Saque dia......{numero_saques}
+*-------------------------------------------*   
+        """)
+
+    elif opcao == 0:
+        break
+    else:
+        print("Operação invalida, por favor selecione novamente a operação desejada")
